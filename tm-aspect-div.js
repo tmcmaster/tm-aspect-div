@@ -63,7 +63,9 @@ class TmAspectDiv extends PolymerElement {
     }
 
     resize() {
-        this._resize(this.clientWidth, this.clientHeight);
+        if (!this.hidden && this.clientHeight > 0 && this.clientWidth > 0) {
+            this._resize(this.clientWidth, this.clientHeight);
+        }
     }
     ready() {
         super.ready();
@@ -74,10 +76,10 @@ class TmAspectDiv extends PolymerElement {
         let resizeTimeout;
         window.onresize = function (e) {
             if (!resizeTimeout) {
-                self._resize(self.clientWidth, self.clientHeight);
+                self.resize();
                 resizeTimeout = setTimeout(function () {
                     resizeTimeout = null;
-                    self._resize(self.clientWidth, self.clientHeight);
+                    self.resize();
                 }, refreshInterval);
             }
         }
