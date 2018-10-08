@@ -17,15 +17,31 @@
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
+        tm-aspect-div {
+          --tm-aspect-div-border: solid green 3px;
+          --tm-aspect-div-padding: 10px;
+          width: calc(100%);
+          height: calc(50vh);
+        }
+
+        tm-aspect-div > div {
+          display: inline-block;
+          width:100%;
+          border:solid orange 1px;
+          text-align: center;
+        }
       </style>
     </custom-style>
   </head>
   <body>
     <div class="vertical-section-container centered">
-      <h3>Basic tm-aspect-div demo</h3>
       <demo-snippet>
         <template>
-          <tm-aspect-div></tm-aspect-div>
+          <tm-aspect-div aspect="1.5" fps="10" duration="0.2">
+            <div>AAAA</div>
+            <div>BBBB</div>
+            <div>CCCC</div>
+          </tm-aspect-div>
         </template>
       </demo-snippet>
     </div>
