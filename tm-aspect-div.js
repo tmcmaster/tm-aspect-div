@@ -13,23 +13,19 @@ class TmAspectDiv extends PolymerElement {
         return html`
             <style>
                 :host {
-                  display: inline-block;
-                  box-sizing: border-box;
-                  //padding: 20px;
-                  //border: solid red 1px;
-                  /*width:100%;*/
-                  /*height:calc(100vh - 70px);*/
+                    display: inline-block;
+                    box-sizing: border-box;
                 }
                 
                 div.centered {
-                    padding: var(--tm-aspect-div-padding, 0);
-                    box-sizing: border-box;
                     display: inline-block;
+                    box-sizing: border-box;
+                    
+                    padding: var(--tm-aspect-div-padding, 0);
                     border: var(--tm-aspect-div-border, none);
-                    //transition: width 1s, height 1s, margin-left 1s, margin-top 1s;
                 }
             </style>
-            <div id="aaa" class="centered"  style$="[[style]]">
+            <div class="centered" style$="[[style]]">
                 <slot></slot>
             </div>
         `;
@@ -56,16 +52,20 @@ class TmAspectDiv extends PolymerElement {
         };
     }
 
+    connectedCallback() {
+        super.connectedCallback();
+        console.log("------- tm-aspect-div has been attached to the DOM.");
+        this._resize(this.clientWidth, this.clientHeight);
+    }
+
+
     ready() {
         super.ready();
-        const self = this;
-        var resizeTimeout;
-        setTimeout(function () {
-            self._resize(self.clientWidth, self.clientHeight);
-        }, 200);
 
+        const self = this;
         const refreshInterval = Math.round(1000 / self.fps);
 
+        let resizeTimeout;
         window.onresize = function (e) {
             if (!resizeTimeout) {
                 self._resize(self.clientWidth, self.clientHeight);
