@@ -55,10 +55,16 @@ class TmAspectDiv extends PolymerElement {
     connectedCallback() {
         super.connectedCallback();
         console.log("------- tm-aspect-div has been attached to the DOM.");
-        this._resize(this.clientWidth, this.clientHeight);
+
+        const self = this;
+        setTimeout(function () {
+            self.resize();
+        }, 1000);
     }
 
-
+    resize() {
+        this._resize(this.clientWidth, this.clientHeight);
+    }
     ready() {
         super.ready();
 
