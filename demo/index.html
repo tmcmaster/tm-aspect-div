@@ -14,6 +14,7 @@
     </script>
 
     <script type="module" src="../tm-aspect-div.js"></script>
+    <script type="module" src="../tm-aspect-div-css.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -30,6 +31,10 @@
           border:solid orange 1px;
           text-align: center;
         }
+        tm-aspect-div-css {
+          width:60vw;
+          height:40vw;
+        }
       </style>
     </custom-style>
   </head>
@@ -37,7 +42,10 @@
     <div class="vertical-section-container centered">
       <demo-snippet>
         <template>
-          <tm-aspect-div aspect="1.5" fps="10" duration="0.2">
+          <!--<tm-aspect-div-css>-->
+            <!--<span>This is another test</span>-->
+          <!--</tm-aspect-div-css>-->
+          <tm-aspect-div aspect="0.5" fps="10" duration="0.2">
             <div>AAAA</div>
             <div>BBBB</div>
             <div>CCCC</div>

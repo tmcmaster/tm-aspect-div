@@ -1,4 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {IronResizableBehavior} from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
 
 /**
  * `tm-aspect-div`
@@ -8,7 +10,7 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
  * @polymer
  * @demo demo/index.html
  */
-class TmAspectDiv extends PolymerElement {
+class TmAspectDiv extends mixinBehaviors([IronResizableBehavior], PolymerElement) {
     static get template() {
         return html`
             <style>
@@ -22,7 +24,7 @@ class TmAspectDiv extends PolymerElement {
                     box-sizing: border-box;
                     
                     padding: var(--tm-aspect-div-padding, 0);
-                    border: var(--tm-aspect-div-border, none);
+                    border: var(--tm-aspect-div-border, 0);
                 }
             </style>
             <div class="centered" style$="[[style]]">
@@ -54,12 +56,14 @@ class TmAspectDiv extends PolymerElement {
 
     connectedCallback() {
         super.connectedCallback();
-        console.log("------- tm-aspect-div has been attached to the DOM.");
+        console.log('Listening for Resize Events')
+        this.addEventListener('iron-resize', this.onIronResize.bind(this));
+        this.resize();
+    }
 
-        const self = this;
-        setTimeout(function () {
-            self.resize();
-        }, 1000);
+    onIronResize() {
+        console.log('tm-aspect-div has resized:');
+        this.resize();
     }
 
     resize() {
@@ -70,23 +74,24 @@ class TmAspectDiv extends PolymerElement {
     ready() {
         super.ready();
 
-        const self = this;
-        const refreshInterval = Math.round(1000 / self.fps);
-
-        let resizeTimeout;
-        window.onresize = function (e) {
-            if (!resizeTimeout) {
-                self.resize();
-                resizeTimeout = setTimeout(function () {
-                    resizeTimeout = null;
-                    self.resize();
-                }, refreshInterval);
-            }
-        }
+        // const self = this;
+        // const refreshInterval = Math.round(1000 / self.fps);
+        //
+        // let resizeTimeout;
+        // window.onresize = function (e) {
+        //     console.log('Window has been resized.', e);
+        //     if (!resizeTimeout) {
+        //         self.resize();
+        //         resizeTimeout = setTimeout(function () {
+        //             resizeTimeout = null;
+        //             self.resize();
+        //         }, refreshInterval);
+        //     }
+        // }
     }
 
     _resize(width, height) {
-        console.log('New Size: ', width, height);
+        console.debug('New Size: ', width, height);
         var style;
         if (this.aspect < 1) {
             // portrait
@@ -119,7 +124,7 @@ class TmAspectDiv extends PolymerElement {
 
         const interval = this.duration;
         style = `${style} transition: width ${interval}s, height ${interval}s, margin-left ${interval}s, margin-top ${interval}s;`;
-        console.log('STYLE: ', style);
+        console.debug('STYLE: ', style);
         this.set('style', style);
     }
 }

@@ -3,6 +3,7 @@
   "description": "Polymer web component container that maintains an aspect ratio.",
   "main": "tm-aspect-div.js",
   "dependencies": {
+    "@polymer/iron-resizable-behavior": "^3.0.1",
     "@polymer/polymer": "^3.0.0"
   },
   "devDependencies": {
